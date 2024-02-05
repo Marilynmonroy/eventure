@@ -2,11 +2,8 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl">
-        Eventure
-        <Button></Button>
-      </h1>
-    </main>
+    <>
+      <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10"></section>
+    </>
   );
 }
