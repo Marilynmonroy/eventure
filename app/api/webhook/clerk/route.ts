@@ -1,7 +1,9 @@
+//sacado de https://clerk.com/docs/users/sync-data
+
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser } from "@/lib/actions/user.actions";
+import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 import { clerkClient } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -85,22 +87,13 @@ export async function POST(req: Request) {
     const { id, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
-      clerkId: id,
-      username: username!,
       firstName: first_name,
       lastName: last_name,
+      username: username!,
       photo: image_url,
     };
 
-    const updatedUser = await updateUser(user);
-
-    if (updatedUser) {
-      await clerkClient.users.updateUserMetadata(id, {
-        publicMetadata: {
-          userId: updatedUser._id,
-        },
-      });
-    }
+    const updatedUser = await updateUser(id, user);
 
     return NextResponse.json({ message: "OK", user: updatedUser });
   }
