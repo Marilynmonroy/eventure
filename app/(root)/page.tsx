@@ -26,7 +26,16 @@ export default function Home() {
           />
         </div>
       </section>
-      <section></section>
+      <section
+        id="eventos"
+        className="wrapper my-8 flex flex-col gap-8 md:gap-12"
+      >
+        <h2 className="h2-bold">Eventos destacados en Eventure</h2>
+
+        <div className="flex w-full flex-col gap-5 md:flex-row">
+          Search Category Filter
+        </div>
+      </section>
     </>
   );
 }
