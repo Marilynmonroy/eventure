@@ -1,4 +1,4 @@
-import React, { startTransition, useState } from "react";
+import React, { startTransition, useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -18,8 +18,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import { ICategory } from "@/lib/database/models/category.model";
+import Category, { ICategory } from "@/lib/database/models/category.model";
 import { Input } from "../input";
+import {
+  createCategory,
+  getAllCategories,
+} from "@/lib/actions/category.actions";
 
 type Dropdownprops = {
   value?: string;
@@ -31,13 +35,29 @@ const Dropdown = ({ value, onChangeHandler }: Dropdownprops) => {
   const [categorias, setCategorias] = useState<ICategory[]>([]);
   const [newCategory, setNewCategory] = useState("");
 
+  useEffect(() => {
+    const getCategorias = async () => {
+      const categoryList = await getAllCategories();
+
+      categoryList && setCategorias(categoryList as ICategory[]);
+    };
+
+    getCategorias();
+  }, []);
   //functions
 
-  const handleAddCategory = () => {};
+  const handleAddCategory = () => {
+    createCategory({
+      categoryName: newCategory.trim(),
+    }).then((Category) => {
+      setCategorias((prevState) => [...prevState, Category]);
+    });
+  };
+
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
       <SelectTrigger className="select-field">
-        <SelectValue placeholder="Categoria" />
+        <SelectValue placeholder="Categoria" className="text-gray-500" />
       </SelectTrigger>
       <SelectContent>
         {categorias.length > 0 &&
@@ -45,7 +65,7 @@ const Dropdown = ({ value, onChangeHandler }: Dropdownprops) => {
             <SelectItem
               key={categoria._id}
               value={categoria._id}
-              classname="select-item p-regular-14"
+              className="select-item p-regular-14"
             >
               {categoria.name}
             </SelectItem>
@@ -56,7 +76,7 @@ const Dropdown = ({ value, onChangeHandler }: Dropdownprops) => {
             className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500
           "
           >
-            Open
+            Añadir una categoria
           </AlertDialogTrigger>
           <AlertDialogContent className="bg-white">
             <AlertDialogHeader>

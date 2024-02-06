@@ -13,7 +13,7 @@ const CreateEvent = () => {
         </h3>
       </section>
       <div className="wrapper">
-        <FormEvent userId={userId} type="crear" />
+        <FormEvent userId={userId} type="Crear" />
       </div>
     </>
   );

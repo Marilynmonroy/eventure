@@ -27,27 +27,95 @@ import { eventDefaultValues } from "@/constants";
 import Dropdown from "./Dropdown";
 import { FileUpload } from "./FileUpload";
 import { Checkbox } from "../checkbox";
+import { useUploadThing } from "@/lib/uploadthing";
+import CreateEvent from "@/app/(root)/events/create/page";
+import { useRouter } from "next/navigation";
+import { createEvent, updateEvent } from "@/lib/actions/event.actions";
+import { IEvent } from "@/lib/database/models/event.model";
 
 type FormEventProps = {
   userId: string;
+  event?: IEvent;
+  eventId?: string;
   type: "Crear" | "Actualizar";
 };
 
-const FormEvent = ({ userId, type }: FormEventProps) => {
+const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
   //hooks
   const [files, setFiles] = useState<File[]>([]);
-
-  const initialValues = eventDefaultValues;
+  const initialValues =
+    event && type === "Actualizar"
+      ? {
+          ...event,
+          startDataTime: new Date(event.startDateTime),
+          endDataTime: new Date(event.endDateTime),
+        }
+      : eventDefaultValues;
+  const router = useRouter();
+  const { startUpload } = useUploadThing("imageUploader");
 
   const form = useForm<z.infer<typeof formEventSchema>>({
     resolver: zodResolver(formEventSchema),
     defaultValues: initialValues,
   });
 
-  function onSubmit(values: z.infer<typeof formEventSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formEventSchema>) {
+    let uploadImage = values.imageUrl;
+
+    if (files.length > 0) {
+      const uploadImages = await startUpload(files);
+      if (!uploadImages) {
+        return;
+      }
+
+      uploadImage = uploadImages[0].url;
+    }
+
+    if (type === "Crear") {
+      try {
+        const newEvent = await createEvent({
+          event: {
+            ...values,
+            imageUrl: uploadImage,
+          },
+          userId,
+          path: "/perfil",
+        });
+
+        if (newEvent) {
+          form.reset();
+          router.push(`/events/${newEvent._id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (type === "Actualizar") {
+      if (!eventId) {
+        router.back();
+        return;
+      }
+
+      try {
+        const updatedEvent = await updateEvent({
+          userId,
+          event: {
+            ...values,
+            imageUrl: uploadImage,
+            _id: eventId,
+          },
+          path: `/events/${eventId}`,
+        });
+
+        if (updatedEvent) {
+          form.reset();
+          router.push(`/events/${updatedEvent._id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (
@@ -238,7 +306,7 @@ const FormEvent = ({ userId, type }: FormEventProps) => {
                                   htmlFor="isFree"
                                   className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 >
-                                  Free Ticket
+                                  Entrada gratis
                                 </label>
                                 <Checkbox
                                   onCheckedChange={field.onChange}
