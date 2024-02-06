@@ -28,7 +28,7 @@ import Dropdown from "./Dropdown";
 import { FileUpload } from "./FileUpload";
 import { Checkbox } from "../checkbox";
 import { useUploadThing } from "@/lib/uploadthing";
-import CreateEvent from "@/app/(root)/events/create/page";
+import CreateEvent from "@/app/(root)/eventos/crear/page";
 import { useRouter } from "next/navigation";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/lib/database/models/event.model";
