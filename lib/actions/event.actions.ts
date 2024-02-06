@@ -31,7 +31,7 @@ const populateEvent = (query: any) => {
     .populate({ path: "category", model: Category, select: "_id name" });
 };
 
-// CREATE
+// CREAR
 export async function createEvent({ userId, event, path }: CreateEventParams) {
   try {
     await connectToDatabase();
@@ -52,7 +52,7 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
   }
 }
 
-// GET ONE EVENT BY ID
+// EVENTO POR ID
 export async function getEventById(eventId: string) {
   try {
     await connectToDatabase();
@@ -67,7 +67,7 @@ export async function getEventById(eventId: string) {
   }
 }
 
-// UPDATE
+// ACTUALIZAR
 export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   try {
     await connectToDatabase();
@@ -90,7 +90,7 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
   }
 }
 
-// DELETE
+// ELIMINAR
 export async function deleteEvent({ eventId, path }: DeleteEventParams) {
   try {
     await connectToDatabase();
@@ -102,7 +102,7 @@ export async function deleteEvent({ eventId, path }: DeleteEventParams) {
   }
 }
 
-// GET ALL EVENTS
+// TODOS LOS EVENTOS
 export async function getAllEvents({
   query,
   limit = 6,
@@ -143,7 +143,7 @@ export async function getAllEvents({
   }
 }
 
-// GET EVENTS BY ORGANIZER
+// EVENTOS POR ORGANIZADOR
 export async function getEventsByUser({
   userId,
   limit = 6,
@@ -172,7 +172,7 @@ export async function getEventsByUser({
   }
 }
 
-// GET RELATED EVENTS: EVENTS WITH SAME CATEGORY
+// EVENTOS POR CATEGORIA
 export async function getRelatedEventsByCategory({
   categoryId,
   eventId,

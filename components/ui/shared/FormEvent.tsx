@@ -84,7 +84,7 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
 
         if (newEvent) {
           form.reset();
-          router.push(`/events/${newEvent._id}`);
+          router.push(`/eventos/${newEvent._id}`);
         }
       } catch (error) {
         console.log(error);

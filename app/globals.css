@@ -182,7 +182,7 @@
   }
 
   .button {
-    @apply rounded-3xl h-[54px] p-regular-16;
+    @apply rounded-2xl h-[54px] p-regular-16;
   }
 
   .select-item {
