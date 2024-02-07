@@ -9,17 +9,12 @@ export const formEventSchema = z.object({
     .min(3, {
       message: "La descripción debe tener al menos 3 caracteres.",
     })
-    .max(200, {
+    .max(500, {
       message: "La descripción debe tener menos de 200 caracteres.",
     }),
-  location: z
-    .string()
-    .min(3, {
-      message: "La ubicación debe tener al menos 3 caracteres.",
-    })
-    .max(200, {
-      message: "La ubicación debe tener menos de 200 caracteres.",
-    }),
+  location: z.string().min(3, {
+    message: "La ubicación debe tener al menos 3 caracteres.",
+  }),
   imageUrl: z.string(),
   startDateTime: z.date(),
   endDateTime: z.date(),
