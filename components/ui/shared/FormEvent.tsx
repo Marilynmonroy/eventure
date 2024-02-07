@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,7 +27,6 @@ import Dropdown from "./Dropdown";
 import { FileUpload } from "./FileUpload";
 import { Checkbox } from "../checkbox";
 import { useUploadThing } from "@/lib/uploadthing";
-import CreateEvent from "@/app/(root)/eventos/crear/page";
 import { useRouter } from "next/navigation";
 import { createEvent, updateEvent } from "@/lib/actions/event.actions";
 import { IEvent } from "@/lib/database/models/event.model";
@@ -47,8 +45,8 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
     event && type === "Actualizar"
       ? {
           ...event,
-          startDataTime: new Date(event.startDateTime),
-          endDataTime: new Date(event.endDateTime),
+          startDateTime: new Date(event.startDateTime),
+          endDateTime: new Date(event.endDateTime),
         }
       : eventDefaultValues;
   const router = useRouter();
@@ -82,6 +80,7 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
           path: "/perfil",
         });
 
+        console.log(newEvent);
         if (newEvent) {
           form.reset();
           router.push(`/eventos/${newEvent._id}`);
@@ -223,7 +222,7 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
           <div className="flex flex-col gap-5 md:flex-row">
             <FormField
               control={form.control}
-              name="startDataTime"
+              name="startDateTime"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel className="">Hora de inicio</FormLabel>
@@ -251,7 +250,7 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
 
             <FormField
               control={form.control}
-              name="endDataTime"
+              name="endDateTime"
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel className="">Hora de fin</FormLabel>

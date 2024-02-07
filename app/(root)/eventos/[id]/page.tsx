@@ -9,7 +9,7 @@ import Image from "next/image";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import Collection from "@/components/ui/shared/Collection";
-import Checkout from "@/components/ui/shared/Checkout";
+import CheckoutButton from "@/components/ui/shared/CheckoutButton";
 
 const EventDetail = async ({
   params: { id },
@@ -55,7 +55,7 @@ const EventDetail = async ({
               </div>
             </div>
 
-            <Checkout event={event} />
+            <CheckoutButton event={event} />
 
             <div className=" flex flex-col gap-5">
               <div className="flex gap-2 md:gap-3 items-center">
@@ -63,10 +63,10 @@ const EventDetail = async ({
                 <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center">
                   <p>
                     {formatDateTime(event.startDateTime).dateOnly} / {""}
-                    {formatDateTime(event.startDateTime).timeOnly}
+                    {formatDateTime(event.startDateTime).timeOnly} {""}
                   </p>
                   <p>
-                    {formatDateTime(event.endDateTime).dateOnly} / {""}
+                    {""} - {formatDateTime(event.endDateTime).dateOnly} / {""}
                     {formatDateTime(event.endDateTime).timeOnly}
                   </p>
                 </div>
