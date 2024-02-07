@@ -24,15 +24,7 @@ export const formEventSchema = z.object({
   startDateTime: z.date(),
   endDateTime: z.date(),
   categoryId: z.string(),
-  price: z.string().refine(
-    (value) => {
-      const numericValue = parseFloat(value);
-      return !isNaN(numericValue) && numericValue >= 10000;
-    },
-    {
-      message: "El precio debe ser un número mayor o igual a 10,000.",
-    }
-  ),
+  price: z.string(),
   isFree: z.boolean(),
   url: z.string().url(),
 });
