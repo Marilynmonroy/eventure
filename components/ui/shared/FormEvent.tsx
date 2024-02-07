@@ -104,12 +104,12 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
             imageUrl: uploadImage,
             _id: eventId,
           },
-          path: `/events/${eventId}`,
+          path: `/eventos/${eventId}`,
         });
 
         if (updatedEvent) {
           form.reset();
-          router.push(`/events/${updatedEvent._id}`);
+          router.push(`/eventos/${updatedEvent._id}`);
         }
       } catch (error) {
         console.log(error);
@@ -293,6 +293,15 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
                         {...field}
                         disabled={form.getValues("isFree")}
                         className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        onChange={(e) => {
+                          const formattedValue = e.target.value.replace(
+                            /[,.]/g,
+                            ""
+                          );
+                          field.onChange(formattedValue);
+                        }}
+                        value={parseFloat(field.value).toLocaleString("es-CO")}
+                        maxLength={15}
                       />
                       <FormField
                         control={form.control}

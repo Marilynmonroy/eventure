@@ -5,6 +5,7 @@ import Collection from "@/components/ui/shared/Collection";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
 import Search from "@/components/ui/shared/Search";
+import CategoryFilter from "@/components/ui/shared/CategoryFilter";
 
 export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
@@ -49,7 +50,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
         <div className="flex w-full flex-col gap-5 md:flex-row">
           <Search />
-          Category Filter
+          <CategoryFilter />
         </div>
 
         <Collection
