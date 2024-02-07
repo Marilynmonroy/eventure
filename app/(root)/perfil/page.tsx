@@ -1,15 +1,25 @@
 import { Button } from "@/components/ui/button";
 import Collection from "@/components/ui/shared/Collection";
 import { getEventsByUser } from "@/lib/actions/event.actions";
+import { getOrdersByUser } from "@/lib/actions/order.actions";
+import { IOrder } from "@/lib/database/models/order.model";
+import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 
-const ProfilePage = async () => {
+const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  const organizadEvents = await getEventsByUser({ userId, page: 1 });
+  const ordersPage = Number(searchParams?.ordersPage) || 1;
+  const eventsPage = Number(searchParams?.eventsPage) || 1;
+
+  const orders = await getOrdersByUser({ userId, page: ordersPage });
+
+  const orderEvents = orders?.data.map((order: IOrder) => order.event) || [];
+
+  const organizadEvents = await getEventsByUser({ userId, page: eventsPage });
 
   return (
     <>
@@ -23,18 +33,18 @@ const ProfilePage = async () => {
         </div>
       </section>
 
-      {/*       <section className="wrapper my-8">
+      <section className="wrapper my-8">
         <Collection
-          data={events?.data}
+          data={orderEvents}
           emptyTitle="No tienes ingresos"
           emptyStateSubtext="Pero no te preocupes, puedes ir a añadir eventos!"
           collectionType="Mis ingresos"
           limit={3}
-          page={1}
+          page={ordersPage}
           urlParamName="paginaReservas"
-          totalPages={2}
+          totalPages={orders?.totalPages}
         />
-      </section> */}
+      </section>
 
       {/* Eventos */}
 
@@ -54,9 +64,9 @@ const ProfilePage = async () => {
           emptyStateSubtext="Vamos a crear alguno!"
           collectionType="Eventos organizados"
           limit={3}
-          page={1}
+          page={eventsPage}
           urlParamName="paginaEventos"
-          totalPages={2}
+          totalPages={organizadEvents?.totalPages}
         />
       </section>
     </>
