@@ -130,7 +130,6 @@ export async function getAllEvents({
       .sort({ createdAt: "desc" })
       .skip(skipAmount)
       .limit(limit);
-
     const events = await populateEvent(eventsQuery);
     const eventsCount = await Event.countDocuments(conditions);
 
