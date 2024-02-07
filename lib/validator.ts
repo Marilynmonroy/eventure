@@ -26,5 +26,4 @@ export const formEventSchema = z.object({
   categoryId: z.string(),
   price: z.string(),
   isFree: z.boolean(),
-  url: z.string(),
 });

@@ -334,27 +334,6 @@ const FormEvent = ({ userId, type, event, eventId }: FormEventProps) => {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="url"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel className="">URL</FormLabel>
-                  <FormControl className="h-72">
-                    <div className="flex-center h-[54px] w-full overflow-hidden rounded-md bg-gray-50 px-4 py-2">
-                      <FaLink className="text-gray-500" />
-                      <Input
-                        placeholder="URL"
-                        {...field}
-                        className="input-field"
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
 
           <div className="flex justify-center">
