@@ -4,6 +4,7 @@ import Image from "next/image";
 import Collection from "@/components/ui/shared/Collection";
 import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
+import Search from "@/components/ui/shared/Search";
 
 export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
@@ -47,7 +48,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
         <h2 className="h2-bold">Eventos destacados en Eventure</h2>
 
         <div className="flex w-full flex-col gap-5 md:flex-row">
-          Search Category Filter
+          <Search />
+          Category Filter
         </div>
 
         <Collection
