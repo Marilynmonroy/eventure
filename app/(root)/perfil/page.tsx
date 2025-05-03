@@ -8,7 +8,8 @@ import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 
-const ProfilePage = async ({ searchParams }: SearchParamProps) => {
+const ProfilePage = async (props: SearchParamProps) => {
+  const searchParams = await props.searchParams;
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 

@@ -53,6 +53,16 @@ export const createOrder = async (order: CreateOrderParams) => {
   try {
     await connectToDatabase();
 
+    const existingOrder = await Order.findOne({
+      event: order.eventId,
+      buyer: order.buyerId,
+    });
+
+    if (existingOrder) {
+      console.log("La persona ya está inscrita en el evento.");
+      return { error: "La persona ya está inscrita en el evento." };
+    }
+
     const newOrder = await Order.create({
       ...order,
       event: order.eventId,

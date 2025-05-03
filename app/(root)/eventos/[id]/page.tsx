@@ -11,10 +11,14 @@ import { FaCalendar } from "react-icons/fa";
 import Collection from "@/components/ui/shared/Collection";
 import CheckoutButton from "@/components/ui/shared/CheckoutButton";
 
-const EventDetail = async ({
-  params: { id },
-  searchParams,
-}: SearchParamProps) => {
+const EventDetail = async (props: SearchParamProps) => {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const event = await getEventById(id);
 
   const relatedEvents = await getRelatedEventsByCategory({

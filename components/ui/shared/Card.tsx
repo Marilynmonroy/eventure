@@ -1,7 +1,5 @@
 import { IEvent } from "@/lib/database/models/event.model";
 import { formatDateTime } from "@/lib/utils";
-import { auth } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaArrowCircleRight, FaEdit } from "react-icons/fa";
@@ -11,12 +9,10 @@ type CardProps = {
   event: IEvent;
   hasOrderLink?: boolean;
   hidePrice?: boolean;
+  userId?: string;
 };
 
-const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-
+const Card = ({ event, hasOrderLink, hidePrice, userId }: CardProps) => {
   const isEventCreator = userId === event.organizer._id.toString();
 
   return (

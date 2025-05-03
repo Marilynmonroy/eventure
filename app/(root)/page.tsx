@@ -6,8 +6,13 @@ import { getAllEvents } from "@/lib/actions/event.actions";
 import { SearchParamProps } from "@/types";
 import Search from "@/components/ui/shared/Search";
 import CategoryFilter from "@/components/ui/shared/CategoryFilter";
+import { auth } from "@clerk/nextjs";
 
-export default async function Home({ searchParams }: SearchParamProps) {
+export default async function Home(props: SearchParamProps) {
+  const { sessionClaims } = await auth();
+  const userId = sessionClaims?.userId as string;
+
+  const searchParams = await props.searchParams;
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";
   const category = (searchParams?.category as string) || "";
@@ -42,6 +47,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
           />
         </div>
       </section>
+
       <section
         id="eventos"
         className="wrapper my-8 flex flex-col gap-8 md:gap-12"

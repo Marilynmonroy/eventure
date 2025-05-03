@@ -12,10 +12,12 @@ type CollectionProps = {
   page: number | string;
   totalPages?: number;
   urlParamName?: string;
+  userId?: string;
 };
 
 const Collection = ({
   data,
+  userId,
   emptyTitle,
   emptyStateSubtext,
   collectionType,
@@ -38,6 +40,7 @@ const Collection = ({
                     event={event}
                     hasOrderLink={hasOrderLink}
                     hidePrice={hidePrice}
+                    userId={userId}
                   />
                 </li>
               );

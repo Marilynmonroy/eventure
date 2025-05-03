@@ -1,5 +1,5 @@
 import { IEvent } from "@/lib/database/models/event.model";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "../button";
 import { checkoutOrder } from "@/lib/actions/order.actions";
@@ -10,17 +10,15 @@ const stripePromise = loadStripe(
 
 const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
   useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
-      console.log("Reserva completa! Mandamos un e-mail de confirmación.");
+      alert("Reserva completa! Mandamos un e-mail de confirmación.");
     }
 
     if (query.get("canceled")) {
-      console.log("Reserva cancelada, intenta nuevamente!.");
+      alert("Reserva cancelada, intenta nuevamente!.");
     }
   }, []);
-
   const onCheckout = async () => {
     const order = {
       eventTitle: event.title,
@@ -36,10 +34,10 @@ const Checkout = ({ event, userId }: { event: IEvent; userId: string }) => {
   return (
     <form action={onCheckout}>
       <Button type="submit" role="link" size="lg" className="button sm:w-fit">
+        {" "}
         {event.isFree ? "Obtener ingreso" : "Comprar ingreso"}
       </Button>
     </form>
   );
 };
-
 export default Checkout;
